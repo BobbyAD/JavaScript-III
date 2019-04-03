@@ -148,10 +148,58 @@ Humanoid.prototype.greet = function() {
 
   Villain.prototype = Object.create(Humanoid.prototype);
 
-  
+  Villain.prototype.attack = function(target) {
+    target.healthPoints -= 5;
+    if (target.healthPoints > 0) {
+      return `${this.name} attacks ${target.name} \n ${target.takeDamage()}`;
+    }
+    else {
+      return `${this.name} attacks ${target.name} \n ${target.destroy()}`;
+    }
+  };
 
   function Hero(attr) {
     Humanoid.call(this, attr);
   };
   
   Hero.prototype = Object.create(Villain.prototype);
+
+
+  const evilWizard = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 15,
+    name: 'Ganon',
+    team: 'Hyrule',
+    weapons: [
+      'Magic',
+      'Big fists',
+    ],
+    language: 'N64 nonsense noises',
+  });
+
+  const coolGuy = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 10,
+    name: 'Cool Guy',
+    team: 'Weird Internet Videos',
+    weapons: [
+      'Sick Beats',
+      'Dance Moves',
+    ],
+    language: 'England',
+  });
+
+  console.log(evilWizard.attack(coolGuy));
+  console.log(coolGuy.attack(evilWizard));
+  console.log(coolGuy.attack(evilWizard));
+  console.log(evilWizard.attack(coolGuy));
